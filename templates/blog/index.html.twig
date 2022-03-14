@@ -4,11 +4,16 @@
     <title>Homepage</title>
 </head>
 <body>
+    {% block list %}
     <h1>Welcome to homepage</h1>
     <ul>
         <li><a href="{{ url('app_blog_article') }}">Article</a></li>
         <li><a href="{{ url('app_blog_news') }}">News</a></li>
         <li><a href="{{ url('app_blog_random') }}">Random</a></li>
     </ul>
+    {% endblock %}
+    {% if url('app_blog') == false %}
+        <a href="{{ url('app_blog') }}">Go to homepage</a>
+    {% endif %}
 </body>
 </html>

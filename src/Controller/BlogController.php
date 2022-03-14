@@ -31,4 +31,16 @@ class BlogController extends AbstractController
     {
         return $this->render('blog/random.html.twig');
     }
+
+    #[Route('/blog/list', name:'app_blog_list')]
+    public function list(): Response
+    {
+        return $this->render('blog/list.html.twig');
+    }
+
+    #[Route('/blog/view', name: 'app_blog_view')]
+    public function view(): Response
+    {
+        return $this->render('blog/view.html.twig');
+    }
 }
