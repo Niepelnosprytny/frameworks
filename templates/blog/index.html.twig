@@ -1,19 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Homepage</title>
+    {% block title %}
+        <title>Homepage</title>
+    {% endblock %}
 </head>
+
 <body>
+{% block body %}
+    {% block content %}<h1>Welcome to homepage</h1>{% endblock %}
     {% block list %}
-    <h1>Welcome to homepage</h1>
     <ul>
+        <li><a href="{{ url('app_blog') }}">Homepage</a> </li>
         <li><a href="{{ url('app_blog_article') }}">Article</a></li>
         <li><a href="{{ url('app_blog_news') }}">News</a></li>
         <li><a href="{{ url('app_blog_random') }}">Random</a></li>
     </ul>
     {% endblock %}
-    {% if url('app_blog') == false %}
-        <a href="{{ url('app_blog') }}">Go to homepage</a>
-    {% endif %}
+{% endblock %}
 </body>
 </html>
