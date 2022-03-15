@@ -22,6 +22,10 @@ class BlogCategory
     #[ORM\Column(type: 'datetime_immutable')]
     private $created_at;
 
+    #[ORM\ManyToOne(targetEntity: BlogArticle::class, inversedBy: 'category')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $blogArticle;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class BlogCategory
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getBlogArticle(): ?BlogArticle
+    {
+        return $this->blogArticle;
+    }
+
+    public function setBlogArticle(?BlogArticle $blogArticle): self
+    {
+        $this->blogArticle = $blogArticle;
 
         return $this;
     }
