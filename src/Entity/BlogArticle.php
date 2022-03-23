@@ -30,8 +30,9 @@ class BlogArticle
     #[ORM\Column(type: 'string', length: 255)]
     private $author;
 
-    #[ORM\OneToMany(mappedBy: 'blogArticle', targetEntity: BlogCategory::class, orphanRemoval: true)]
-    private $category;
+    #[ORM\ManyToOne(targetEntity: BlogCategory::class, inversedBy: 'category')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $blogCategory;
 
     public function __construct()
     {
@@ -103,32 +104,14 @@ class BlogArticle
         return $this;
     }
 
-    /**
-     * @return Collection<int, BlogCategory>
-     */
-    public function getCategory(): Collection
+    public function getBlogCategory(): ?BlogCategory
     {
-        return $this->category;
+        return $this->blogCategory;
     }
 
-    public function addCategory(BlogCategory $category): self
+    public function setBlogCategory(?BlogCategory $blogCategory): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
-            $category->setBlogArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(BlogCategory $category): self
-    {
-        if ($this->category->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getBlogArticle() === $this) {
-                $category->setBlogArticle(null);
-            }
-        }
+        $this->blogCategory = $blogCategory;
 
         return $this;
     }

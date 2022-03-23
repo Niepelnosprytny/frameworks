@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BlogCategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BlogCategoryRepository::class)]
@@ -22,9 +24,13 @@ class BlogCategory
     #[ORM\Column(type: 'datetime_immutable')]
     private $created_at;
 
-    #[ORM\ManyToOne(targetEntity: BlogArticle::class, inversedBy: 'category')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $blogArticle;
+    #[ORM\OneToMany(mappedBy: 'blogCategory', targetEntity: BlogArticle::class, orphanRemoval: true)]
+    private $category;
+
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,14 +73,32 @@ class BlogCategory
         return $this;
     }
 
-    public function getBlogArticle(): ?BlogArticle
+    /**
+     * @return Collection<int, BlogArticle>
+     */
+    public function getCategory(): Collection
     {
-        return $this->blogArticle;
+        return $this->category;
     }
 
-    public function setBlogArticle(?BlogArticle $blogArticle): self
+    public function addCategory(BlogArticle $category): self
     {
-        $this->blogArticle = $blogArticle;
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+            $category->setBlogCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(BlogArticle $category): self
+    {
+        if ($this->category->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getBlogCategory() === $this) {
+                $category->setBlogCategory(null);
+            }
+        }
 
         return $this;
     }
