@@ -1,5 +1,7 @@
 <?php
 
+//https://blog.digital-craftsman.de/import-database-from-dump-with-doctrine-and-symfony/
+
 use App\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
