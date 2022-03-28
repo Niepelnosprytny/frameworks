@@ -1,0 +1,41 @@
+{% block title %}Blog articles{% endblock %}
+
+{% set category = app.request.get('category')|capitalize %}
+{% set counter = 0 %}
+
+{% block body %}
+    <h1>{{ category }}</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created_at</th>
+            <th>Author</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for blog_article in blog_articles %}
+            {% if blog_article.blogcategory == category %}
+                <tr>
+                    <td>{{ blog_article.title }}</td>
+                    <td>{{ blog_article.description }}</td>
+                    <td>{{ blog_article.createdAt ? blog_article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ blog_article.author }}</td>
+                    <td>{{ blog_article.blogcategory }}</td>
+                </tr>
+            {% else %}
+                {% set counter = counter + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        {% if blog_articles|length == counter %}
+            <tr>
+                <td>No articles in this category</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

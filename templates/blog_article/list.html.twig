@@ -1,0 +1,56 @@
+{% extends 'blog_article/full.html.twig' %}
+
+{% block title %}Blog articles list{% endblock %}
+
+{% block body %}
+    <h1>Blog Articles list</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created_at</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% set from = 0 %}
+            {% set to = 4 %}
+            {% set pages = 0 %}
+            {% set pages = (blog_articles|length / 5)|round(0, 'ceil') %}
+            {% set actualPage = app.request.get('page') %}
+
+            {% if actualPage > pages %}
+                <tr>
+                    <td>Nothing was found</td>
+                </tr>
+            {% else %}
+                {% if blog_articles|length >= 5 %}
+                    {% set from = 0 + 5 * (actualPage - 1) %}
+                    {% set to = 4 + 5 * (actualPage - 1) %}
+
+                    {% if to >= blog_articles|length %}
+                        {% set to = blog_articles|length - 1 %}
+                    {% endif %}
+                {% endif %}
+
+                {% for i in from .. to %}
+                    <tr>
+                        <td>{{ blog_articles[i].title }}</td>
+                        <td>{{ blog_articles[i].description }}</td>
+                        <td>{{ blog_articles[i].createdAt ? blog_articles[i].createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ blog_articles[i].author }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            <table>
+                <tr>
+                    {% for i in 1 .. pages %}
+                        <td><a href="{{ url('app_blog_article_list', {"page": i}) }}">{{ i }}</a></td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </tbody>
+    </table>
+{% endblock %}
