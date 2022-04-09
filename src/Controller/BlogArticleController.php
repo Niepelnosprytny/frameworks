@@ -46,7 +46,7 @@ class BlogArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $blogArticleRepository->add($blogArticle);
-            return $this->redirectToRoute('app_blog_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_blog_article_full', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('blog_article/new.html.twig', [
@@ -71,7 +71,7 @@ class BlogArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $blogArticleRepository->add($blogArticle);
-            return $this->redirectToRoute('app_blog_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_blog_article_full', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('blog_article/edit.html.twig', [
@@ -87,6 +87,6 @@ class BlogArticleController extends AbstractController
             $blogArticleRepository->remove($blogArticle);
         }
 
-        return $this->redirectToRoute('app_blog_article_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_blog_article_full', [], Response::HTTP_SEE_OTHER);
     }
 }
