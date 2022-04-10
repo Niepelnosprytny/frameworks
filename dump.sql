@@ -151,7 +151,7 @@ CREATE TABLE `probe` (
   `answer3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number_of_answer3` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,6 +160,7 @@ CREATE TABLE `probe` (
 
 LOCK TABLES `probe` WRITE;
 /*!40000 ALTER TABLE `probe` DISABLE KEYS */;
+INSERT INTO `probe` VALUES (1,'Why am I still here?','Just to suffer',0,'Because I have to',0,'Because I can\'t move anywhere',0);
 /*!40000 ALTER TABLE `probe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +178,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,6 +187,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-10 12:16:01
+-- Dump completed on 2022-04-10 14:29:24

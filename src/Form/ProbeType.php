@@ -14,11 +14,8 @@ class ProbeType extends AbstractType
         $builder
             ->add('question')
             ->add('answer1')
-            ->add('numberOfAnswer1')
             ->add('answer2')
-            ->add('numberOfAnswer2')
             ->add('answer3')
-            ->add('numberOfAnswer3')
         ;
     }
 

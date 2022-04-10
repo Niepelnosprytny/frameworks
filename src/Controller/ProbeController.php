@@ -25,6 +25,9 @@ class ProbeController extends AbstractController
     public function new(Request $request, ProbeRepository $probeRepository): Response
     {
         $probe = new Probe();
+        $probe->setnumberOfAnswer1(0);
+        $probe->setnumberOfAnswer2(0);
+        $probe->setnumberOfAnswer3(0);
         $form = $this->createForm(ProbeType::class, $probe);
         $form->handleRequest($request);
 
@@ -36,14 +39,6 @@ class ProbeController extends AbstractController
         return $this->renderForm('probe/new.html.twig', [
             'probe' => $probe,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_probe_show', methods: ['GET'])]
-    public function show(Probe $probe): Response
-    {
-        return $this->render('probe/show.html.twig', [
-            'probe' => $probe,
         ]);
     }
 
