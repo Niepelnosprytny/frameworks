@@ -1,5 +1,8 @@
 {% block body %}
+    {% set i = random(0, probes|length - 1) %}
+
     <h1>Probe</h1>
+
     {% if app.user is not empty %}
         <p>
             You are logged as {{ app.user.username }}
@@ -10,10 +13,10 @@
         <a href="{{ url('app_register') }}">Register</a>
     {% endif %}
 
-    <h2>{{ probes[0].question }}</h2>
-        <p>{{ probes[0].answer1 }}: {{ probes[0].numberOfAnswer1 }}</p>
-        <p>{{ probes[0].answer2 }}: {{ probes[0].numberOfAnswer2 }}</p>
-        <p>{{ probes[0].answer3 }}: {{ probes[0].numberOfAnswer3 }}</p>
+    <h2>{{ probes[i].question }}</h2>
+        <p>{{ probes[i].answer1 }}: {{ probes[i].numberOfAnswer1 }}</p>
+        <p>{{ probes[i].answer2 }}: {{ probes[i].numberOfAnswer2 }}</p>
+        <p>{{ probes[i].answer3 }}: {{ probes[i].numberOfAnswer3 }}</p>
 
     {% if app.user is not empty and 'ROLE_ADMIN' in app.user.roles %}
         <a href="{{ path('app_probe_new') }}">Create new</a>
