@@ -43,7 +43,9 @@ security:
 when@test:
     security:
         role_hierarhy:
-            ROLE_ADMIN: [ROLE_USER]
+            ROLE_ADMIN: ROLE_USER
+        access_control:
+            - { path: ^/probe/new, roles: ROLE_ADMIN }
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes

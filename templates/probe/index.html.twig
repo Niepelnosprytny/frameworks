@@ -14,9 +14,9 @@
     {% endif %}
 
     <h2>{{ probes[i].question }}</h2>
-        <p>{{ probes[i].answer1 }}: {{ probes[i].numberOfAnswer1 }}</p>
-        <p>{{ probes[i].answer2 }}: {{ probes[i].numberOfAnswer2 }}</p>
-        <p>{{ probes[i].answer3 }}: {{ probes[i].numberOfAnswer3 }}</p>
+        <p>{{ probes[i].answer1 }}: </p>
+        <p>{{ probes[i].answer2 }}: </p>
+        <p>{{ probes[i].answer3 }}: </p>
 
     {% if app.user is not empty and 'ROLE_ADMIN' in app.user.roles %}
         <a href="{{ path('app_probe_new') }}">Create new</a>

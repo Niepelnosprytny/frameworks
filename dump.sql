@@ -101,7 +101,7 @@ CREATE TABLE `doctrine_migration_versions` (
 
 LOCK TABLES `doctrine_migration_versions` WRITE;
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
-INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58),('DoctrineMigrations\\Version20220410101449','2022-04-10 12:15:06',69);
+INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58),('DoctrineMigrations\\Version20220410101449','2022-04-10 12:15:06',69),('DoctrineMigrations\\Version20220410205506','2022-04-10 22:55:20',165),('DoctrineMigrations\\Version20220410212224','2022-04-10 23:22:40',156);
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,13 +145,10 @@ CREATE TABLE `probe` (
   `id` int NOT NULL AUTO_INCREMENT,
   `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number_of_answer1` int NOT NULL,
   `answer2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number_of_answer2` int NOT NULL,
   `answer3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number_of_answer3` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +157,7 @@ CREATE TABLE `probe` (
 
 LOCK TABLES `probe` WRITE;
 /*!40000 ALTER TABLE `probe` DISABLE KEYS */;
-INSERT INTO `probe` VALUES (1,'Why am I still here?','Just to suffer',0,'Because I have to',0,'Because I can\'t move anywhere',0);
+INSERT INTO `probe` VALUES (1,'Why am I still here?','Just to suffer','Because I have to','Because I can\'t move anywhere'),(2,'Is there any point of life?','There is not','Point of life is to not think about it','Death'),(3,'Which of those colors you like the most?','Red','Green','Blue');
 /*!40000 ALTER TABLE `probe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,6 +187,35 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `vote`
+--
+
+DROP TABLE IF EXISTS `vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vote` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_id_id` int NOT NULL,
+  `user_id_id` int NOT NULL,
+  `chosen_answer` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5A1085644FAF8F53` (`question_id_id`),
+  KEY `IDX_5A1085649D86650F` (`user_id_id`),
+  CONSTRAINT `FK_5A1085644FAF8F53` FOREIGN KEY (`question_id_id`) REFERENCES `probe` (`id`),
+  CONSTRAINT `FK_5A1085649D86650F` FOREIGN KEY (`user_id_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote`
+--
+
+LOCK TABLES `vote` WRITE;
+/*!40000 ALTER TABLE `vote` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vote` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -200,4 +226,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-10 14:29:24
+-- Dump completed on 2022-04-11  0:06:00
