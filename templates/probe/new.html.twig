@@ -1,0 +1,9 @@
+{% block title %}New Probe{% endblock %}
+
+{% block body %}
+    <h1>Create new Probe</h1>
+
+    {{ include('probe/_form.html.twig') }}
+
+    <a href="{{ path('app_probe_index') }}">back to list</a>
+{% endblock %}

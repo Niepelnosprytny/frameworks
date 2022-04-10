@@ -101,7 +101,7 @@ CREATE TABLE `doctrine_migration_versions` (
 
 LOCK TABLES `doctrine_migration_versions` WRITE;
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
-INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58);
+INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58),('DoctrineMigrations\\Version20220410101449','2022-04-10 12:15:06',69);
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +132,35 @@ CREATE TABLE `messenger_messages` (
 LOCK TABLES `messenger_messages` WRITE;
 /*!40000 ALTER TABLE `messenger_messages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `messenger_messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `probe`
+--
+
+DROP TABLE IF EXISTS `probe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `probe` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number_of_answer1` int NOT NULL,
+  `answer2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number_of_answer2` int NOT NULL,
+  `answer3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number_of_answer3` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `probe`
+--
+
+LOCK TABLES `probe` WRITE;
+/*!40000 ALTER TABLE `probe` DISABLE KEYS */;
+/*!40000 ALTER TABLE `probe` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -169,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-09 11:24:17
+-- Dump completed on 2022-04-10 12:16:01

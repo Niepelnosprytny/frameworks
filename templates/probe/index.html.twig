@@ -1,0 +1,45 @@
+{% block title %}Probe index{% endblock %}
+
+{% block body %}
+    <h1>Probe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Question</th>
+                <th>Answer1</th>
+                <th>NumberOfAnswer1</th>
+                <th>Answer2</th>
+                <th>NumberOfAnswer2</th>
+                <th>Answer3</th>
+                <th>NumberOfAnswer3</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for probe in probes %}
+            <tr>
+                <td>{{ probe.id }}</td>
+                <td>{{ probe.question }}</td>
+                <td>{{ probe.answer1 }}</td>
+                <td>{{ probe.numberOfAnswer1 }}</td>
+                <td>{{ probe.answer2 }}</td>
+                <td>{{ probe.numberOfAnswer2 }}</td>
+                <td>{{ probe.answer3 }}</td>
+                <td>{{ probe.numberOfAnswer3 }}</td>
+                <td>
+                    <a href="{{ path('app_probe_show', {'id': probe.id}) }}">show</a>
+                    <a href="{{ path('app_probe_edit', {'id': probe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_probe_new') }}">Create new</a>
+{% endblock %}
