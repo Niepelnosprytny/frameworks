@@ -24,6 +24,7 @@ class ProbeController extends AbstractController
     #[Route('/new', name: 'app_probe_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProbeRepository $probeRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $probe = new Probe();
         $form = $this->createForm(ProbeType::class, $probe);
         $form->handleRequest($request);

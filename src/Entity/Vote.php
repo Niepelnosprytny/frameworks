@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VoteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
@@ -13,54 +15,82 @@ class Vote
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Probe::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $question_id;
+    #[ORM\Column(type: 'integer')]
+    private $chosenAnswer;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'votes')]
     private $user_id;
 
-    #[ORM\Column(type: 'integer')]
-    private $chosen_answer;
+    #[ORM\ManyToMany(targetEntity: Probe::class, inversedBy: 'votes')]
+    private $question_id;
+
+    public function __construct()
+    {
+        $this->user_id = new ArrayCollection();
+        $this->question_id = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getQuestionId(): ?Probe
+    public function getChosenAnswer(): ?int
     {
-        return $this->question_id;
+        return $this->chosenAnswer;
     }
 
-    public function setQuestionId(?Probe $question_id): self
+    public function setChosenAnswer(int $chosenAnswer): self
     {
-        $this->question_id = $question_id;
+        $this->chosenAnswer = $chosenAnswer;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserId(): Collection
     {
         return $this->user_id;
     }
 
-    public function setUserId(?User $user_id): self
+    public function addUserId(User $userId): self
     {
-        $this->user_id = $user_id;
+        if (!$this->user_id->contains($userId)) {
+            $this->user_id[] = $userId;
+        }
 
         return $this;
     }
 
-    public function getChosenAnswer(): ?int
+    public function removeUserId(User $userId): self
     {
-        return $this->answer_1_votes;
+        $this->user_id->removeElement($userId);
+
+        return $this;
     }
 
-    public function setChosenAnswer(int $answer_1_votes): self
+    /**
+     * @return Collection<int, Probe>
+     */
+    public function getQuestionId(): Collection
     {
-        $this->answer_1_votes = $answer_1_votes;
+        return $this->question_id;
+    }
+
+    public function addQuestionId(Probe $questionId): self
+    {
+        if (!$this->question_id->contains($questionId)) {
+            $this->question_id[] = $questionId;
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionId(Probe $questionId): self
+    {
+        $this->question_id->removeElement($questionId);
 
         return $this;
     }

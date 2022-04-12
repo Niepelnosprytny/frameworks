@@ -7,16 +7,31 @@
         <p>
             You are logged as {{ app.user.username }}
             <a href="{{ url('app_logout') }}">Logout</a>
-        </p>
+
+        <form>
+            <h2>{{ probes[i].question }}</h2>
+            <br>
+            <input type="radio" name="answer" id="answer1">
+            <label for="answer1">{{ probes[i].answer1 }}: </label>
+            <br>
+            <input type="radio" name="answer" id="answer2">
+            <label for="answer2">{{ probes[i].answer2 }}: </label>
+            <br>
+            <input type="radio" name="answer" id="answer3">
+            <label for="answer3">{{ probes[i].answer3 }}: </label>
+            <br>
+            <button class="btn">{{ button_label|default('Save') }}</button>
+            <br>
+        </form>
     {% else %}
         <a href="{{ url('app_login') }}">Log in</a>
         <a href="{{ url('app_register') }}">Register</a>
-    {% endif %}
 
-    <h2>{{ probes[i].question }}</h2>
+        <h2>{{ probes[i].question }}</h2>
         <p>{{ probes[i].answer1 }}: </p>
         <p>{{ probes[i].answer2 }}: </p>
         <p>{{ probes[i].answer3 }}: </p>
+    {% endif %}
 
     {% if app.user is not empty and 'ROLE_ADMIN' in app.user.roles %}
         <a href="{{ path('app_probe_new') }}">Create new</a>
