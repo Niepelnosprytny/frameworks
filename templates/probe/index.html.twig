@@ -8,19 +8,19 @@
             You are logged as {{ app.user.username }}
             <a href="{{ url('app_logout') }}">Logout</a>
 
-        <form method="post">
+        <form method="post" action="{{ path('app_probe_vote') }}">
             <h2>{{ probes[i].question }}</h2>
             <br>
-            <input type="radio" name="answer" id="answer1" value="1">
+            <input type="radio" name="chosen_answer" id="answer1" value="1">
             <label for="answer1">{{ probes[i].answer1 }}: </label>
             <br>
-            <input type="radio" name="answer" id="answer2" value="2">
+            <input type="radio" name="chosen_answer" id="answer2" value="2">
             <label for="answer2">{{ probes[i].answer2 }}: </label>
             <br>
-            <input type="radio" name="answer" id="answer3" value="3">
+            <input type="radio" name="chosen_answer" id="answer3" value="3">
             <label for="answer3">{{ probes[i].answer3 }}: </label>
-            <input type="hidden" value="{{ app.user.id }}">
-            <input type="hidden" value="{{ probes[i].id }}">
+            <input type="hidden" name="user_id" value="{{ app.user.id }}">
+            <input type="hidden" name="question_id" value="{{ probes[i].id }}">
             <br><br>
             <input type="submit" value="Submit">
             <br>

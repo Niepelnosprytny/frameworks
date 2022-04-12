@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
+use App\Entity\Vote;
 use App\Form\ProbeType;
 use App\Repository\ProbeRepository;
+use App\Repository\VoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +40,20 @@ class ProbeController extends AbstractController
             'probe' => $probe,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/vote', name: 'app_probe_vote', methods: ['GET', 'POST'])]
+    public function vote(VoteRepository $voteRepository, Request $request): Response
+    {
+        $answer = $request->get('answer');
+        $user = $request->get('user');
+        $question = $request->get('question');
+        $vote = new Vote();
+        $vote->setChosenAnswer($answer);
+        $vote->addQuestionId($question);
+        $vote->addUserId($user);
+        $voteRepository->add($vote);
+        return $this->redirectToRoute('app_probe_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/edit', name: 'app_probe_edit', methods: ['GET', 'POST'])]
