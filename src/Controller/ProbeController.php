@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Probe;
 use App\Entity\Vote;
+use App\Entity\User;
 use App\Form\ProbeType;
 use App\Repository\ProbeRepository;
 use App\Repository\VoteRepository;
@@ -45,13 +46,13 @@ class ProbeController extends AbstractController
     #[Route('/vote', name: 'app_probe_vote', methods: ['GET', 'POST'])]
     public function vote(VoteRepository $voteRepository, Request $request): Response
     {
-        $answer = $request->get('answer');
-        $user = $request->get('user');
-        $question = $request->get('question');
         $vote = new Vote();
+        $answer = $request->get('chosen_answer');
+        $question = (int)$request->get('question_id');
+        $user = (int)$request->get('user_id');
         $vote->setChosenAnswer($answer);
-        $vote->addQuestionId($question);
-        $vote->addUserId($user);
+        $vote->setQuestionId($question);
+        $vote->setUserId($user);
         $voteRepository->add($vote);
         return $this->redirectToRoute('app_probe_index', [], Response::HTTP_SEE_OTHER);
     }

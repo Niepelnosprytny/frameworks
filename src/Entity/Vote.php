@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\VoteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
@@ -16,19 +14,13 @@ class Vote
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    private $chosenAnswer;
+    private $chosen_answer;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'votes')]
-    private $user_id;
-
-    #[ORM\ManyToMany(targetEntity: Probe::class, inversedBy: 'votes')]
+    #[ORM\Column(type: 'integer')]
     private $question_id;
 
-    public function __construct()
-    {
-        $this->user_id = new ArrayCollection();
-        $this->question_id = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'integer')]
+    private $user_id;
 
     public function getId(): ?int
     {
@@ -37,60 +29,36 @@ class Vote
 
     public function getChosenAnswer(): ?int
     {
-        return $this->chosenAnswer;
+        return $this->chosen_answer;
     }
 
-    public function setChosenAnswer(int $chosenAnswer): self
+    public function setChosenAnswer(int $chosen_answer): self
     {
-        $this->chosenAnswer = $chosenAnswer;
+        $this->chosen_answer = $chosen_answer;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->user_id;
-    }
-
-    public function addUserId(User $userId): self
-    {
-        if (!$this->user_id->contains($userId)) {
-            $this->user_id[] = $userId;
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): self
-    {
-        $this->user_id->removeElement($userId);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Probe>
-     */
-    public function getQuestionId(): Collection
+    public function getQuestionId(): ?int
     {
         return $this->question_id;
     }
 
-    public function addQuestionId(Probe $questionId): self
+    public function setQuestionId(int $question_id): self
     {
-        if (!$this->question_id->contains($questionId)) {
-            $this->question_id[] = $questionId;
-        }
+        $this->question_id = $question_id;
 
         return $this;
     }
 
-    public function removeQuestionId(Probe $questionId): self
+    public function getUserId(): ?int
     {
-        $this->question_id->removeElement($questionId);
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
