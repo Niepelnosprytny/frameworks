@@ -1,0 +1,31 @@
+<h1>Admin panel</h1>
+
+        <p>
+            You are logged as Admin
+            <a href="{{ url('app_logout') }}">Logout</a>
+        </p>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Answer 1</th>
+                <th>Answer 2</th>
+                <th>Answer 3</th>
+                <th>Votes</th>
+                <th>Enabled</th>
+            </tr>
+        {% for probe in probes  %}
+            <tr>
+                <td>{{ probe.id }}</td>
+                <td>{{ probe.question }}</td>
+                <td>{{ probe.answer1 }}</td>
+                <td>{{ probe.answer2 }}</td>
+                <td>{{ probe.answer3 }}</td>
+                <td>TODO: Counting votes</td>
+                <td>TODO: Enable/Disable status</td>
+                <td><button>Change</button></td>
+            </tr>
+        {% endfor %}
+        </table>
+        <a href="{{ path('app_probe_new') }}">Create new</a>

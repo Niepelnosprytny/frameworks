@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Probe;
 use App\Entity\Vote;
-use App\Entity\User;
 use App\Form\ProbeType;
 use App\Repository\ProbeRepository;
 use App\Repository\VoteRepository;
@@ -19,9 +18,22 @@ class ProbeController extends AbstractController
     #[Route('/', name: 'app_probe_index', methods: ['GET', 'POST'])]
     public function index(ProbeRepository $probeRepository): Response
     {
+        if(is_array($this->getUser()->getRoles())){
+            $roles = $this->getUser()->getRoles();
+        } else {
+            $roles = [];
+        }
+
+        if(in_array('ROLE_ADMIN', $roles)){
+            return $this->render('probe/admin.html.twig', [
+                'probes' => $probeRepository->findAll(),
+            ]);
+        } else {
+            var_dump($roles);
         return $this->render('probe/index.html.twig', [
             'probes' => $probeRepository->findAll(),
         ]);
+        }
     }
 
     #[Route('/new', name: 'app_probe_new', methods: ['GET', 'POST'])]
