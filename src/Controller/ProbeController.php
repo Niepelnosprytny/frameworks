@@ -18,7 +18,7 @@ class ProbeController extends AbstractController
     #[Route('/', name: 'app_probe_index', methods: ['GET', 'POST'])]
     public function index(ProbeRepository $probeRepository): Response
     {
-        if(is_array($this->getUser()->getRoles())){
+        if($this->getUser()){
             $roles = $this->getUser()->getRoles();
         } else {
             $roles = [];
