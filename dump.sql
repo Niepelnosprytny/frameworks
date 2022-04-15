@@ -175,7 +175,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm');
+INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm'),(7,'Sebastian','[\"ROLE_USER\"]','$2y$13$YW6fhNZZjI3FAovUiW0cQ.VKHJC24GYD2oiOprRjBlAXYHUpcPj0u'),(8,'Maciej','[\"ROLE_USER\"]','$2y$13$./QOerXnTj0juBPZSsT3/OWRZhoQf5Khk6CTteC2oC2iYE7NslJLy');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +201,7 @@ CREATE TABLE `vote` (
   `question_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +210,7 @@ CREATE TABLE `vote` (
 
 LOCK TABLES `vote` WRITE;
 /*!40000 ALTER TABLE `vote` DISABLE KEYS */;
-INSERT INTO `vote` VALUES (1,2,1,5);
+INSERT INTO `vote` VALUES (4,2,2,6),(5,3,2,7),(6,1,1,7),(7,1,1,8),(8,2,3,8);
 /*!40000 ALTER TABLE `vote` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -223,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-13 17:39:16
+-- Dump completed on 2022-04-15 15:15:30

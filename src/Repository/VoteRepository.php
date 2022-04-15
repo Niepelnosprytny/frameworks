@@ -45,6 +45,23 @@ class VoteRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllVotesPerAnswer(int $probeId, int $answer)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT count(chosen_answer)
+        FROM vote, probe, user
+        WHERE (vote.user_id = user.id
+        AND vote.question_id = probe.id)
+        AND probe.id = :probe
+        AND chosen_answer = :answer;';
+        $stmt = $conn->prepare($sql);
+
+        $resultSet = $stmt->executeQuery(['probe' => $probeId, 'answer' => $answer]);
+
+        return $resultSet->fetchAllNumeric();
+    }
+
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */

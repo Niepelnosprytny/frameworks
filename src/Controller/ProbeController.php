@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProbeController extends AbstractController
 {
     #[Route('/', name: 'app_probe_index', methods: ['GET', 'POST'])]
-    public function index(ProbeRepository $probeRepository): Response
+    public function index(ProbeRepository $probeRepository, VoteRepository $voteRepository): Response
     {
         if($this->getUser()){
             $roles = $this->getUser()->getRoles();
@@ -24,15 +24,34 @@ class ProbeController extends AbstractController
             $roles = [];
         }
 
+        $number = random_int(1, count($probeRepository->findAll()));
+
+        $votesPerProbe = array();
         if(in_array('ROLE_ADMIN', $roles)){
+            for($j = 0; $j <= count($probeRepository->findAll()); $j++){
+                for($i = 0; $i <= 2; $i++){
+                    $value = $voteRepository->findAllVotesPerAnswer($j, $i + 1)[0][0];
+                    $votesPerProbe[$j][$i] = $value;
+                }
+            }
+
             return $this->render('probe/admin.html.twig', [
                 'probes' => $probeRepository->findAll(),
+                'votes' => $voteRepository->findAll(),
+                'votesPerProbe' => $votesPerProbe,
             ]);
         } else {
-            var_dump($roles);
-        return $this->render('probe/index.html.twig', [
-            'probes' => $probeRepository->findAll(),
-        ]);
+            for($i = 0; $i <= 2; $i++){
+                $value = $voteRepository->findAllVotesPerAnswer($number, $i + 1)[0][0];
+                $votesPerProbe[$i] = $value;
+            }
+
+            return $this->render('probe/index.html.twig', [
+                'probes' => $probeRepository->findAll(),
+                'votes' => $voteRepository->findAll(),
+                'votesPerProbe' => $votesPerProbe,
+                'number' => $number,
+            ]);
         }
     }
 
