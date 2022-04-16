@@ -1,10 +1,10 @@
+{% set i = number - 1 %}
 <h1>Probe</h1>
 
  {% if app.user is not empty and votes is not empty %}
      <p>
      You are logged as {{ app.user.username }}
      <a href="{{ url('app_logout') }}">Logout</a>
-     {% set i = number - 1 %}
 
      <form method="post" action="{{ path('app_probe_vote') }}">
          <h2>{{ probes[i].question }}</h2>
@@ -17,15 +17,13 @@
          <br>
          <input type="radio" name="chosen_answer" id="answer3" value="3">
          <label for="answer3">{{ probes[i].answer3 }}: {{ votesPerProbe[2] }}</label>
-     <input type="hidden" name="user_id" value="{{ app.user.id }}">
+        <input type="hidden" name="user_id" value="{{ app.user.id }}">
          <input type="hidden" name="question_id" value="{{ probes[i].id }}">
          <br><br>
          <input type="submit" value="Submit">
          <br>
     </form>
  {% else %}
-     {% set i = number - 1 %}
-
      <a href="{{ url('app_login') }}">Log in</a>
      <a href="{{ url('app_register') }}">Register</a>
 

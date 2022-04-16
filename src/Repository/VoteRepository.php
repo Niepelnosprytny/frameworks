@@ -62,6 +62,24 @@ class VoteRepository extends ServiceEntityRepository
         return $resultSet->fetchAllNumeric();
     }
 
+    public function findAllUsersPerProbe(int $probeId){
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT username
+        FROM user, vote, probe
+        WHERE (user.id = vote.user_id
+        AND probe.id = vote.question_id)
+        AND probe.id = :probe
+        GROUP BY username';
+
+        $stmt = $conn->prepare($sql);
+
+        $resultSet = $stmt->executeQuery(['probe' => $probeId]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */

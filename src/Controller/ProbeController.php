@@ -27,18 +27,23 @@ class ProbeController extends AbstractController
         $number = random_int(1, count($probeRepository->findAll()));
 
         $votesPerProbe = array();
+        $usersPerProbe = array();
         if(in_array('ROLE_ADMIN', $roles)){
             for($j = 0; $j <= count($probeRepository->findAll()); $j++){
                 for($i = 0; $i <= 2; $i++){
-                    $value = $voteRepository->findAllVotesPerAnswer($j, $i + 1)[0][0];
-                    $votesPerProbe[$j][$i] = $value;
+                    $votesValue = $voteRepository->findAllVotesPerAnswer($j, $i + 1)[0][0];
+                    $votesPerProbe[$j][$i] = $votesValue;
                 }
+
+                $userValue = $voteRepository->findAllUsersPerProbe($j);
+                $usersPerProbe[$j] = $userValue;
             }
 
             return $this->render('probe/admin.html.twig', [
                 'probes' => $probeRepository->findAll(),
                 'votes' => $voteRepository->findAll(),
                 'votesPerProbe' => $votesPerProbe,
+                'usersPerProbe' => $usersPerProbe,
             ]);
         } else {
             for($i = 0; $i <= 2; $i++){

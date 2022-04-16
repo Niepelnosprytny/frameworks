@@ -13,6 +13,7 @@
         <th>Answer 2</th>
         <th>Answer 3</th>
         <th>Votes</th>
+        <th>Voters</th>
         <th>Enabled</th>
     </tr>
     {% for probe in probes  %}
@@ -26,6 +27,11 @@
                 1: {{ votesPerProbe[probe.id][0] }}
                 2: {{ votesPerProbe[probe.id][1] }}
                 3: {{ votesPerProbe[probe.id][2] }}
+            </td>
+            <td>
+                {% for i in 0 .. usersPerProbe[probe.id]|length - 1 %}
+                    {{ usersPerProbe[probe.id][i]['username'] }}
+                {% endfor %}
             </td>
             <td>TODO: Enable/Disable status</td>
             <td><button>Change</button></td>
