@@ -79,17 +79,39 @@ class ProbeController extends AbstractController
         ]);
     }
 
-    #[Route('/vote', name: 'app_probe_vote', methods: ['GET', 'POST'])]
+    #[Route('/vote', name: 'app_probe_vote', methods: ['POST'])]
     public function vote(VoteRepository $voteRepository, Request $request): Response
     {
         $vote = new Vote();
+
         $answer = $request->get('chosen_answer');
+
         $question = (int)$request->get('question_id');
         $user = (int)$request->get('user_id');
+
         $vote->setChosenAnswer($answer);
         $vote->setQuestionId($question);
         $vote->setUserId($user);
+
         $voteRepository->add($vote);
+        return $this->redirectToRoute('app_probe_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/enabled', name: 'app_probe_enabled', methods: ['POST'])]
+    public function enabled(ProbeRepository $probeRepository, Request $request): Response
+    {
+        $probeId = $request->get('id');
+        $enabled = $request->get('enabled');
+
+        $probe = $probeRepository->find($probeId);
+
+        if($enabled == true){
+            $probe->setEnabled(false);
+        } else {
+            $probe->setEnabled(true);
+        }
+
+        $probeRepository->add($probe);
         return $this->redirectToRoute('app_probe_index', [], Response::HTTP_SEE_OTHER);
     }
 

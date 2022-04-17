@@ -25,6 +25,9 @@ class Probe
     #[ORM\Column(type: 'string', length: 255)]
     private $answer3;
 
+    #[ORM\Column(type: 'boolean')]
+    private $enabled;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Probe
     public function setAnswer3(string $answer3): self
     {
         $this->answer3 = $answer3;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

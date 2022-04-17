@@ -33,8 +33,18 @@
                     {{ usersPerProbe[probe.id][i]['username'] }}
                 {% endfor %}
             </td>
-            <td>TODO: Enable/Disable status</td>
-            <td><button>Change</button></td>
+            <td>
+                {% if probe.enabled == true %}
+                    {% set text = "Disable" %}
+                {% else %}
+                    {% set text = "Enable" %}
+                {% endif %}
+                <form method="post" action="{{ path('app_probe_enabled') }}">
+                    <input type="hidden" name="id" value="{{ probe.id }}">
+                    <input type="hidden" name="enabled" value="{{ probe.enabled }}">
+                    <input type="submit" value="{{ text }}">
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>
