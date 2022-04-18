@@ -101,7 +101,7 @@ CREATE TABLE `doctrine_migration_versions` (
 
 LOCK TABLES `doctrine_migration_versions` WRITE;
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
-INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58),('DoctrineMigrations\\Version20220410101449','2022-04-10 12:15:06',69),('DoctrineMigrations\\Version20220410205506','2022-04-10 22:55:20',165),('DoctrineMigrations\\Version20220410212224','2022-04-10 23:22:40',156),('DoctrineMigrations\\Version20220413151913','2022-04-13 17:19:23',243),('DoctrineMigrations\\Version20220413153655','2022-04-13 17:37:09',58);
+INSERT INTO `doctrine_migration_versions` VALUES ('DoctrineMigrations\\Version20220323123202','2022-03-23 13:32:19',167),('DoctrineMigrations\\Version20220329134235','2022-03-29 15:42:50',57),('DoctrineMigrations\\Version20220409091858','2022-04-09 11:19:13',58),('DoctrineMigrations\\Version20220410101449','2022-04-10 12:15:06',69),('DoctrineMigrations\\Version20220410205506','2022-04-10 22:55:20',165),('DoctrineMigrations\\Version20220410212224','2022-04-10 23:22:40',156),('DoctrineMigrations\\Version20220413151913','2022-04-13 17:19:23',243),('DoctrineMigrations\\Version20220413153655','2022-04-13 17:37:09',58),('DoctrineMigrations\\Version20220416173326','2022-04-16 19:33:37',67);
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,6 +147,7 @@ CREATE TABLE `probe` (
   `answer1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -157,7 +158,7 @@ CREATE TABLE `probe` (
 
 LOCK TABLES `probe` WRITE;
 /*!40000 ALTER TABLE `probe` DISABLE KEYS */;
-INSERT INTO `probe` VALUES (1,'Why am I still here?','Just to suffer','Because I have to','Because I can\'t move anywhere'),(2,'Is there any point of life?','There is not','Point of life is to not think about it','Death'),(3,'Which of those colors you like the most?','Red','Green','Blue');
+INSERT INTO `probe` VALUES (1,'Why am I still here?','Just to suffer','Because I have to','Because I can\'t move anywhere',0),(2,'Is there any point of life?','There is not','Point of life is to not think about it','Death',1),(3,'Which of those colors you like the most?','Red','Green','Blue',1);
 /*!40000 ALTER TABLE `probe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +176,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +185,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm'),(7,'Sebastian','[\"ROLE_USER\"]','$2y$13$YW6fhNZZjI3FAovUiW0cQ.VKHJC24GYD2oiOprRjBlAXYHUpcPj0u'),(8,'Maciej','[\"ROLE_USER\"]','$2y$13$./QOerXnTj0juBPZSsT3/OWRZhoQf5Khk6CTteC2oC2iYE7NslJLy');
+INSERT INTO `user` VALUES (5,'Admin','[\"ROLE_ADMIN\"]','$2y$13$DKJzyKkIPaY8MFsOMGwjIOVIYUVWqBOh7PYSfO9tuAPOumZrli3VK'),(6,'Sad monkey','[\"ROLE_USER\"]','$2y$13$gFXzPnFjDXsbxdRuCvC6EOcbEStI45/0fxjXxEWb8iO3Zv9J27Ctm'),(7,'Sebastian','[\"ROLE_USER\"]','$2y$13$YW6fhNZZjI3FAovUiW0cQ.VKHJC24GYD2oiOprRjBlAXYHUpcPj0u'),(8,'Maciej','[\"ROLE_USER\"]','$2y$13$./QOerXnTj0juBPZSsT3/OWRZhoQf5Khk6CTteC2oC2iYE7NslJLy'),(9,'Anna','[\"ROLE_USER\"]','$2y$13$P4Q8UwOETvIopLOjs9DTduJU4EsSOi3UetmXZ9TV7mcpYnxNeeZHW');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +202,7 @@ CREATE TABLE `vote` (
   `question_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +211,7 @@ CREATE TABLE `vote` (
 
 LOCK TABLES `vote` WRITE;
 /*!40000 ALTER TABLE `vote` DISABLE KEYS */;
-INSERT INTO `vote` VALUES (4,2,2,6),(5,3,2,7),(6,1,1,7),(7,1,1,8),(8,2,3,8);
+INSERT INTO `vote` VALUES (4,2,2,6),(5,3,2,7),(6,1,1,7),(7,1,1,8),(8,2,3,8),(9,3,3,7);
 /*!40000 ALTER TABLE `vote` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -223,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-15 15:15:30
+-- Dump completed on 2022-04-18 13:40:55

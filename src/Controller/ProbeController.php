@@ -18,13 +18,40 @@ class ProbeController extends AbstractController
     #[Route('/', name: 'app_probe_index', methods: ['GET', 'POST'])]
     public function index(ProbeRepository $probeRepository, VoteRepository $voteRepository): Response
     {
+        $disabledProbes = $probeRepository->findAllDisabledProbes();
+
         if($this->getUser()){
+            $disallowedProbes = array();
+            $userId = $this->getUser()->getId();
             $roles = $this->getUser()->getRoles();
+            $alreadyVoted = $probeRepository->findAllAlreadyVotedByUserProbes($userId);
+
+            for($i = 0; $i < count($alreadyVoted); $i++){
+                $disallowedProbes[$i] = $alreadyVoted[$i]['id'];
+            }
+
+            for($j = 0; $j < count($disabledProbes); $j++){
+                if(in_array($disabledProbes[$j]['id'], $disallowedProbes) == false){
+                    array_push($disallowedProbes, $disabledProbes[$j]['id']);
+                }
+            }
+
+            for($k = 0; $k < count($probeRepository->findAll()); $k++){
+                $array[$k] = $k;
+            }
+
+            $array = array_diff($array, $disallowedProbes);
+            $array = array_values($array);
+
+            if(array_key_exists(0, $array) && array_key_exists(1, $array)) {
+                $number = array_rand($array);
+            } else {
+                $number = -1;
+            }
         } else {
             $roles = [];
+            $number = random_int(1, count($probeRepository->findAll())) - 1;
         }
-
-        $number = random_int(1, count($probeRepository->findAll()));
 
         $votesPerProbe = array();
         $usersPerProbe = array();

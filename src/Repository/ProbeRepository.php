@@ -45,6 +45,41 @@ class ProbeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllDisabledProbes()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT probe.id
+        FROM probe,vote,user
+        WHERE (user.id = vote.user_id
+        AND probe.id = vote.question_id)
+        AND enabled = false
+        GROUP BY probe.id';
+
+        $stmt = $conn->prepare($sql);
+
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findAllAlreadyVotedByUserProbes(int $userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT probe.id
+        FROM probe,vote,user
+        WHERE (user.id = vote.user_id
+        AND probe.id = vote.question_id)
+        AND user.id = :user';
+
+        $stmt = $conn->prepare($sql);
+
+        $resultSet = $stmt->executeQuery(['user' => $userId]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Probe[] Returns an array of Probe objects
     //  */
